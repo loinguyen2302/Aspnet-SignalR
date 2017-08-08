@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,33 +34,9 @@
         @RenderBody()
     </div>
 
-    @*@Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
-   
-    <script>
-        var api = "http://localhost:9259/";
-        var connection = $.hubConnection(api + "signalr", { useDefaultPath: false });
-        
-        var hubProxy = connection.createHubProxy('myHub');
-        hubProxy.state.userName = "loinq";
-        //query string
-        connection.qs = { 'country': 'VN' };
-        hubProxy.on('hello', function (message) {
-            alert(message);
-        });
-        //
-        connection.start().done(function () {
-            console.log("Connected, transport = " + connection.transport.name);
-            console.log('Now connected, connection ID=' + connection.id);
-            //
-            hubProxy.invoke('sendAll', "hello world").done(function () {
-                console.log('invocation succeeded');
-            }).fail(function (error) {
-                console.log('invocation failed. error: ' + error);
-            });
-        }).fail(function (error) {
-            console.log('Could not connect: ' + error);
-        });
-    </script>
+    <script src="~/Scripts/signalR.Api.js"></script>
+    
+    <script src="http://localhost:6977/signalr/hubs"></script>
+    <script src="~/Scripts/signalR.sefthost.js"></script>
 </body>
 </html>
